@@ -18,6 +18,6 @@ jobs:
         id: set_file_path
         run: echo "::set-output name=file_path::${{ github.workspace }}/test.txt"
       - name: Run Main Workflow in main-repo
-        uses: main-repo/.github/workflows/main-workflow.yml@main
+        uses: main/.github/workflows/main-workflow.yml@main
         with:
           file_path: ${{ steps.set_file_path.outputs.file_path }}
