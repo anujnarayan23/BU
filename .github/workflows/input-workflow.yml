@@ -9,7 +9,7 @@ on:
 
 jobs:
   call-workflow-passing-data:
-    uses: anujnarayan23/main/.github/workflows/main-workflow.yml@main
+    uses: anujnarayan23/main/.github/workflows/main-workflow.yml@dev
   run-main-workflow:
     runs-on: ubuntu-latest
 
