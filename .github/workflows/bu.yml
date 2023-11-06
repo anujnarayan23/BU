@@ -1,0 +1,25 @@
+# This is the basic wokfow to showcase the use of Reusable Workflow
+
+name: Reusable Workflow user
+
+on:
+  workflow_dispatch:
+
+jobs:
+  do-it:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run a one-line script
+        run: echo Hello Word
+
+      - name: Set File Path Input
+        id: set_file_path
+        run: echo "::set-output name=file_path::${{ github.workspace }}/test.txt"
+
+  call_other_workflow:
+    uses: anujnarayan23/main/.github/workflows/main-workflow.yml@dev
+    with:
+      file_path: ${{ steps.set_file_path.outputs.file_path }}
