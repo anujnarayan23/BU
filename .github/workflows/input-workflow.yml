@@ -1,19 +1,25 @@
-# This is BU repo
+# This is the basic wokfow to showcase the use of Reusable Workflow
 
-name: Input Workflow
+name: Reusable Workflow user
 
 on:
-  workflow_run:
-    workflows: ["Main Workflow"]
-    types:
-      - completed
-  
+  workflow_dispatch:
+
 jobs:
-  call-workflow-passing-data:
-    uses: anujnarayan23/main/.github/workflows/main-workflow.yml@dev
-  run-main-workflow:
+  do-it:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Set File Path Input
-        id: set_file_path
-        run: echo "::set-output name=file_path::${{ github.workspace }}/test.txt"
+      - uses: https://github.com/actions/checkout@v2
+
+      - name: Run a one-line script
+        run: echo Hello Word
+
+  docker:
+    uses: https://api.github.com/repos/${{ github.repository }}/.github/workflows/buildandpublishDockerImage.yml@main
+    with:
+      image_name: my-app
+      tag: $GITHUB_RUN_NUMBER
+    secrets:
+      registry_username: ${{secrets.REGISTRY_USERNAME}}
+      registry_password: ${{secrets.REGISTRY_PASSWORD}}
