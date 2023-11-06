@@ -15,7 +15,7 @@ jobs:
         run: echo "::set-output name=file_path::${{ github.workspace }}/test.txt"
 
       - name: Trigger Main Workflow in main-repo
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.NEW_TOKEN }}
           script: |
