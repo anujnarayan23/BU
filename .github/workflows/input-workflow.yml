@@ -20,7 +20,7 @@ jobs:
       - name: Run Main Workflow in main-repo
         uses: actions/checkout@v2
         with:
-          repository: main/main  # Specify the target repository
+          repository: main  # Specify the target repository
           ref: dev  # Replace 'dev' with the actual branch or commit reference
           uses: main/.github/workflows/main-workflow.yml
           file_path: ${{ steps.set_file_path.outputs.file_path }}
