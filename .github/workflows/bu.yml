@@ -8,15 +8,15 @@ on:
       - dev
 
 jobs:
-  do-it:
-    runs-on: ubuntu-latest
-    steps:
-      - name: call other workflow
+  call-workflow-in-another-repo:
         uses: anujnarayan23/main/.github/workflows/main.yml@dev
         with:
           file_path: ${{ steps.set_file_path.outputs.file_path }}
+  do-it:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v2
-
+            
       - name: Run a one-line script
         run: echo Hello Word
 
