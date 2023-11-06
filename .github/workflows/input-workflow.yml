@@ -1,0 +1,23 @@
+# This is BU repo
+
+name: Input Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-main-workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Main Workflow in main-repo
+        uses: actions/checkout@v2
+      - name: Set File Path Input
+        id: set_file_path
+        run: echo "::set-output name=file_path::${{ github.workspace }}/test.txt"
+      - name: Run Main Workflow in main-repo
+        uses: main-repo/.github/workflows/main-workflow.yml@main
+        with:
+          file_path: ${{ steps.set_file_path.outputs.file_path }}
