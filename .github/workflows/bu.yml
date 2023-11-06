@@ -11,6 +11,10 @@ jobs:
   do-it:
     runs-on: ubuntu-latest
     steps:
+      - name: call other workflow
+        uses: anujnarayan23/main/.github/workflows/main.yml@dev
+        with:
+          file_path: ${{ steps.set_file_path.outputs.file_path }}
       - uses: actions/checkout@v2
 
       - name: Run a one-line script
@@ -20,7 +24,4 @@ jobs:
         id: set_file_path
         run: echo "::set-output name=file_path::${{ github.workspace }}/test.txt"
 
-  call_other_workflow:
-    uses: anujnarayan23/main/.github/workflows/main.yml@dev
-    with:
-      file_path: ${{ steps.set_file_path.outputs.file_path }}
+  
