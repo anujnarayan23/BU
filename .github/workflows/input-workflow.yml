@@ -16,7 +16,7 @@ jobs:
         run: echo Hello Word
 
   docker:
-    uses: anujnarayan23/main/.github/workflows/buildandpublishDockerImage.yml@dev
+    uses: anujnarayan23/main/.github/workflows/main-workflow.yml@dev
     with:
       image_name: my-app
       tag: $GITHUB_RUN_NUMBER
