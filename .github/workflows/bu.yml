@@ -1,6 +1,4 @@
-# This is the basic wokfow to showcase the use of Reusable Workflow.
-
-name: BU Workflow user
+name: Input Workflow
 
 on:
   push:
@@ -8,20 +6,18 @@ on:
       - dev
 
 jobs:
-  call-workflow-in-another-repo:
-        uses: anujnarayan23/main/.github/workflows/main.yml@dev
-        with:
-          file_path: ${{ steps.set_file_path.outputs.file_path }}
-  do-it:
+  run-main-workflow:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-            
-      - name: Run a one-line script
-        run: echo Hello Word
 
+    steps:
       - name: Set File Path Input
         id: set_file_path
         run: echo "::set-output name=file_path::${{ github.workspace }}/test.txt"
 
-  
+      - name: Trigger Main Workflow in main-repo
+        uses: actions/checkout@v2
+
+      - name: Run Main Workflow in main-repo
+        uses: anujnarayan23/main/.github/workflows/main.yml@dev
+        with:
+          file_path: ${{ steps.set_file_path.outputs.file_path }}
