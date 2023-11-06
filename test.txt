@@ -1,0 +1,28 @@
+Requirement Covered: Job Promotion from lower to higher environment.
+Steps covered in the flow diagram explained as below:
+The CICD template for Job promotion is adapted into the BU repository as explained in README file.
+Once the template setup is done, the Job promotion flow must be triggered manually.
+Only Admins will be able to trigger and run the Job promotion template.
+The following files must be updated and uploaded to GitHub repo (the format of these files will be provided in README):
+databricks_inputs.json
+acl_details.json
+5. Once these files are uploaded, user can trigger the workflow by providing the required inputs:
+Job ID
+Source Environment
+Target Environment
+Other job and cluster related inputs.
+6. On trigger, the Git Actions template will:
+Validate the inputs provided.
+Connect to DataBricks source workspace and export the job details.
+Modify the job details as required for target, based on the inputs provided by the user in databricks_inputs.json
+Update the permission details for the job, based on inputs provided by the user in acl_details.json
+Import the final job details json to target environment.
+7. Validations:
+In acl_details, any user_names provided can only have “CAN_VIEW” permission, only groups and service accounts can have other permissions in higher envs.
+Schedules and triggers should be added in Dev environment, as required in Prod. The triggers will be activated by CICD template when moving it from Test to Prod.
+The basic mandatory tags must be added to every job workflow : app, project-id or apms-id, business-unit-n1, application-owner
+
+
+DATABRICKS_TOKEN_DEV - Databricks PAT for Development  
+DATABRICKS_TOKEN_TST - Databricks PAT for Test 
+DATABRICKS_TOKEN_PRD - Databricks PAT for Production 
