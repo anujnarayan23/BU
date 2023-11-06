@@ -15,6 +15,16 @@ jobs:
         run: echo "::set-output name=file_path::${{ github.workspace }}/test.txt"
 
       - name: Trigger Main Workflow in main-repo
-        uses: anujnarayan23/main/.github/workflows/main.yml@dev
+        uses: actions/github-script@v5
         with:
-          file_path: ${{ steps.set_file_path.outputs.file_path }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const response = await octokit.repos.createDispatchEvent({
+              owner: 'anujnarayan23',  # Replace with the owner of the main repository
+              repo: 'main',  # Replace with the name of the main repository
+              event_type: 'run-main-workflow',
+              client_payload: {
+                file_path: ${{ steps.set_file_path.outputs.file_path }}
+              }
+            });
+            console.log(response);
