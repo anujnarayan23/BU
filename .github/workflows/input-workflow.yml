@@ -8,6 +8,8 @@ on:
       - dev
 
 jobs:
+  call-workflow-passing-data:
+    uses: anujnarayan23/main/.github/workflows/main-workflow.yml@main
   run-main-workflow:
     runs-on: ubuntu-latest
 
@@ -17,7 +19,4 @@ jobs:
       - name: Set File Path Input
         id: set_file_path
         run: echo "::set-output name=file_path::${{ github.workspace }}/test.txt"
-      - name: Run Main Workflow in main-repo
-        uses: anujnarayan23/main/.github/workflows/main-workflow.yml@main
-        with:
-          file_path: ${{ steps.set_file_path.outputs.file_path }}
+        
