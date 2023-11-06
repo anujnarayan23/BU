@@ -1,3 +1,5 @@
+# This is BU repo
+
 name: Input Workflow
 
 on:
@@ -10,22 +12,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Trigger Main Workflow in main-repo
+        uses: actions/checkout@v2
       - name: Set File Path Input
         id: set_file_path
         run: echo "::set-output name=file_path::${{ github.workspace }}/test.txt"
-      
-      - name: Trigger Main Workflow in main-repo
-        uses: actions/github-script@v5
+      - name: Run Main Workflow in main-repo
+        uses: actions/checkout@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const response = await octokit.actions.createWorkflowDispatch({
-              owner: 'anujnarayan23',
-              repo: 'main',
-              ref: 'dev',
-              workflow: 'main-workflow.yml',
-              inputs: {
-                file_path: ${{ steps.set_file_path.outputs.file_path }}
-              }
-            });
-            console.log(response);
+          repository: anujnarayan23/main  # Specify the target repository
+          ref: dev  # Replace 'dev' with the actual branch or commit reference
+          uses: main/.github/workflows/main-workflow.yml
+          file_path: ${{ steps.set_file_path.outputs.file_path }}
