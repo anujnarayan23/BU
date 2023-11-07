@@ -1,0 +1,24 @@
+# This is the basic wokfow to showcase the use of Reusable Workflow
+
+name: Reusable Workflow user
+
+on:
+  workflow_dispatch:
+
+jobs:
+  do-it:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run a one-line script
+        run: echo Hello Word
+
+  docker:
+    uses: anujnarayan23/main/.github/workflows/main.yml@dev
+    with:
+      image_name: my-app
+      tag: $GITHUB_RUN_NUMBER
+    secrets:
+      registry_username: ${{secrets.REGISTRY_USERNAME}}
+      registry_password: ${{secrets.REGISTRY_PASSWORD}}
