@@ -1,6 +1,6 @@
 # This is the basic wokfow to showcase the use of Reusable Workflow
 
-name: Reusable Workflow user
+name: Reusable Workflow user test
 
 on:
   workflow_dispatch:
